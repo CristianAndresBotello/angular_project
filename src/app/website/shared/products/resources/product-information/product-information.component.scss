@@ -1,0 +1,37 @@
+.name-product{
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.price-product{
+    font-weight: 900;
+    display: flex;
+    flex-direction: row;
+
+    .price{
+        font-weight: 900;
+        margin: .5rem 0rem;
+        font-size: 1.3rem;
+    }
+    .price-old{
+        text-decoration:line-through 3px #3f6752;
+        display:inline;
+        margin: .5rem .5rem;
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: black;
+    }
+    
+    .price-old span{
+        color:black;
+    }  
+
+    .discount{
+        margin: .5rem 0rem;
+        color: #3f6752;
+        font-size: small;
+        font-weight: 900;
+    }
+}
+.designer-product{
+    font-size: small;
+}

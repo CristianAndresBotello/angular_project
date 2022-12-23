@@ -1,0 +1,15 @@
+.content-stars{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .star{
+        width: 20px;
+    }
+
+    .number-total-ratings{
+        align-self: center;
+        margin-left: .3rem;
+        font-size: 1.1rem;
+    }
+}

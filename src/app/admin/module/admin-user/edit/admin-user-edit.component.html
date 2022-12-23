@@ -1,0 +1,125 @@
+<div
+  class="module-header d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">
+    <i class="bi bi-person-fill"></i>
+    <span class="text-capitalize">{{ currentForm }} Admin User</span>
+  </h1>
+</div>
+<div class="col-md-6">
+  <form class="row g-2" [formGroup]="adminUserForm" (ngSubmit)="onSubmit()">
+    <div class="form-floating">
+      <select
+        formControlName="status"
+        name="status"
+        id="status"
+        [ngClass]="[
+          'form-select',
+          validateForm && status.errors ? 'is-invalid' : ''
+        ]"
+      >
+        <option *ngFor="let option of statusOptions" [ngValue]="option.key">
+          {{ option.value }}
+        </option>
+      </select>
+      <label for="status" class="form-label">Status</label>
+      <!-- Validation -->
+      <app-alert-validation
+        *ngIf="validateForm"
+        [data]="status"
+      ></app-alert-validation>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        formControlName="user"
+        name="user"
+        id="user"
+        [ngClass]="[
+          'form-control',
+          validateForm && user.errors ? 'is-invalid' : ''
+        ]"
+        placeholder="User"
+      />
+      <label for="user" class="form-label">User</label>
+      <!-- Validation -->
+      <app-alert-validation
+        *ngIf="validateForm"
+        [data]="user"
+      ></app-alert-validation>
+    </div>
+    <div class="">
+      <div class="form-floating password-group">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          name="password"
+          id="password"
+          [ngClass]="[
+            'form-control',
+            validateForm && password.errors ? 'is-invalid' : ''
+          ]"
+          placeholder="Password"
+        />
+        <label for="password" class="form-label">Password</label>
+        <span
+          class="input-group-text"
+          (click)="showPassword = !showPassword"
+          role="button"
+        >
+          <i
+            [ngClass]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"
+          ></i>
+        </span>
+      </div>
+      <!-- Validation -->
+      <app-alert-validation
+        *ngIf="validateForm"
+        [data]="password"
+      ></app-alert-validation>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        formControlName="name"
+        name="name"
+        id="name"
+        [ngClass]="[
+          'form-control',
+          validateForm && name.errors ? 'is-invalid' : ''
+        ]"
+        placeholder="Name"
+      />
+      <label for="name" class="form-label">Name</label>
+      <!-- Validation -->
+      <app-alert-validation
+        *ngIf="validateForm"
+        [data]="name"
+      ></app-alert-validation>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        formControlName="email"
+        name="email"
+        id="email"
+        [ngClass]="[
+          'form-control',
+          validateForm && email.errors ? 'is-invalid' : ''
+        ]"
+        placeholder="Email"
+      />
+      <label for="email" class="form-label">Email</label>
+      <!-- Validation -->
+      <app-alert-validation
+        *ngIf="validateForm"
+        [data]="email"
+      ></app-alert-validation>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary" [disabled]="submitDisabled">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

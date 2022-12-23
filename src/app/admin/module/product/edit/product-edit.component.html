@@ -1,0 +1,350 @@
+<form
+  class="row g-2"
+  [formGroup]="productForm"
+  (ngSubmit)="onSubmit()"
+  (keydown.enter)="$event.preventDefault()"
+>
+  <div
+    class="module-header d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+  >
+    <h1 class="h2">
+      <i class="bi bi-person-fill"></i>
+      <span class="text-capitalize">{{ currentForm }} Product</span>
+      <button
+        type="submit"
+        class="btn btn-primary ms-3"
+        [disabled]="submitDisabled"
+      >
+        Submit
+      </button>
+    </h1>
+  </div>
+  <div class="row">
+    <!-- Basic form -->
+    <div class="col-md-12 col-lg-6 my-2">
+      <div class="container border rounded pt-2 mb-2">
+        <div class="form-floating mb-2">
+          <input
+            formControlName="user"
+            id="user"
+            type="text"
+            placeholder="User search"
+            class="form-control"
+            [class.is-invalid]="validateForm && user.errors"
+            [ngbTypeahead]="searchUser"
+            [resultFormatter]="searchFormatter"
+            [inputFormatter]="searchFormatter"
+            [editable]="false"
+          />
+          <label for="user" class="form-label">User</label>
+          <!-- Validation -->
+          <app-alert-validation
+            *ngIf="validateForm"
+            [data]="user"
+          ></app-alert-validation>
+        </div>
+        <div class="form-floating mb-2">
+          <select
+            formControlName="status"
+            name="status"
+            id="status"
+            [ngClass]="[
+              'form-select',
+              validateForm && status.errors ? 'is-invalid' : ''
+            ]"
+          >
+            <option *ngFor="let option of statusOptions" [ngValue]="option.key">
+              {{ option.value }}
+            </option>
+          </select>
+          <label for="status" class="form-label">Status</label>
+          <!-- Validation -->
+          <app-alert-validation
+            *ngIf="validateForm"
+            [data]="status"
+          ></app-alert-validation>
+        </div>
+        <div class="form-floating mb-2">
+          <input
+            type="text"
+            formControlName="name"
+            name="name"
+            id="name"
+            [ngClass]="[
+              'form-control',
+              validateForm && name.errors ? 'is-invalid' : ''
+            ]"
+            placeholder="Name"
+          />
+          <label for="name" class="form-label">Name</label>
+          <!-- Validation -->
+          <app-alert-validation
+            *ngIf="validateForm"
+            [data]="name"
+          ></app-alert-validation>
+        </div>
+        <div class="form-floating mb-2">
+          <textarea
+            formControlName="description"
+            name="description"
+            id="description"
+            [ngClass]="[
+              'product-description',
+              'form-control',
+              validateForm && description.errors ? 'is-invalid' : ''
+            ]"
+            placeholder="Description"
+          ></textarea>
+          <label for="description" class="form-label">Description</label>
+          <!-- Validation -->
+          <app-alert-validation
+            *ngIf="validateForm"
+            [data]="description"
+          ></app-alert-validation>
+        </div>
+        <div class="form-floating mb-2">
+          <input
+            formControlName="category"
+            id="category"
+            type="text"
+            placeholder="Category search"
+            class="form-control"
+            [class.is-invalid]="validateForm && category.errors"
+            [ngbTypeahead]="searchCategory"
+            [resultFormatter]="searchFormatter"
+            [inputFormatter]="searchFormatter"
+            [editable]="false"
+          />
+          <label for="category" class="form-label">Category Menu</label>
+          <!-- Validation -->
+          <app-alert-validation
+            *ngIf="validateForm"
+            [data]="category"
+          ></app-alert-validation>
+        </div>
+        <div class="mb-2">
+          <div class="input-group">
+            <div class="form-floating flex-fill">
+              <input
+                type="text"
+                formControlName="tags"
+                name="tags"
+                id="tags"
+                [ngClass]="[
+                  'form-control',
+                  'rounded-0 rounded-start',
+                  invalidTag && tags.errors ? 'is-invalid' : ''
+                ]"
+                placeholder="Tags"
+                (keydown.enter)="addTag()"
+              />
+              <label for="tags" class="form-label">Tags</label>
+            </div>
+            <button
+              class="btn btn-outline-secondary rounded-end"
+              type="button"
+              (click)="addTag()"
+            >
+              Add
+            </button>
+          </div>
+          <!-- Validation -->
+          <app-alert-validation
+            *ngIf="invalidTag"
+            [data]="tags"
+          ></app-alert-validation>
+          <!-- Tag viewer -->
+          <div>
+            <div
+              *ngFor="let tag of productTags; let i = index"
+              class="badge bg-secondary me-1"
+              role="button"
+              (click)="removeTag(tag)"
+            >
+              <div *ngIf="tag.action != 'delete'">
+                <span>{{ tag.name }}</span>
+                <span class="ps-1"><i class="bi bi-x-circle"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-floating mb-2">
+          <input
+            type="number"
+            formControlName="price"
+            name="price"
+            id="price"
+            [ngClass]="[
+              'form-control',
+              validateForm && price.errors ? 'is-invalid' : ''
+            ]"
+            placeholder="Price"
+          />
+          <label for="price" class="form-label">Price</label>
+          <!-- Validation -->
+          <app-alert-validation
+            *ngIf="validateForm"
+            [data]="description"
+          ></app-alert-validation>
+        </div>
+      </div>
+    </div>
+    <!-- Category Options form -->
+    <div class="col-md-12 col-lg-6 my-2">
+      <div class="container border rounded pt-2 mb-2">
+        <!-- <h5>Product Category</h5> -->
+        <!-- Product Category -->
+        <div class="form-floating mb-2">
+          <input
+            formControlName="productCategory"
+            id="productCategory"
+            type="text"
+            placeholder="Product Category search"
+            class="form-control"
+            [class.is-invalid]="validateForm && productCategory.errors"
+            [ngbTypeahead]="searchProductCategory"
+            [resultFormatter]="searchFormatter"
+            [inputFormatter]="searchFormatter"
+            [editable]="false"
+            (selectItem)="reloadCategoryOptionsForm($event)"
+          />
+          <label for="productCategory" class="form-label"
+            >Product Category</label
+          >
+          <!-- Validation -->
+          <app-alert-validation
+            *ngIf="validateForm"
+            [data]="productCategory"
+          ></app-alert-validation>
+        </div>
+        <!-- Options form -->
+        <div
+          class="row mb-2"
+          *ngFor="let option of categoryOptionsView"
+          formGroupName="productCategoryOptions"
+        >
+          <div class="col-4">
+            <div class="">
+              {{ option.name }} {{ option.required ? "*" : "" }}
+            </div>
+            <div class="fw-lighter fst-italic">
+              <small>{{ option.description }}</small>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="row">
+              <div class="col" *ngFor="let field of option.fields">
+                <app-form-control
+                  [field]="field"
+                  [parentForm]="productCategoryOptions.controls[option.id]"
+                ></app-form-control>
+              </div>
+              <!-- Validation -->
+              <app-alert-validation
+                *ngIf="validateForm"
+                [data]="productCategoryOptions.controls[option.id]"
+              ></app-alert-validation>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Images form -->
+    <div class="col-md-12 col-lg-6 my-2">
+      <div class="container border rounded pt-2 mb-2">
+        <div class="mb-3 row">
+          <label for="images" class="form-label">Images</label>
+          <input
+            class="form-control"
+            type="file"
+            name="images"
+            id="images"
+            (change)="onFileChange($event)"
+            accept="image/jpeg,image/png"
+            multiple
+          />
+        </div>
+        <div class="mb-3">
+          <div class="images-container" cdkDropListGroup>
+            <div
+              cdkDropList
+              (cdkDropListDropped)="dropListDropped()"
+              (cdkDropListEntered)="cdkDropListEntered($event)"
+            ></div>
+            <div
+              *ngFor="let image of images.value; let i = index"
+              class="card-container"
+              cdkDropList
+              (cdkDropListDropped)="dropListDropped()"
+              (cdkDropListEntered)="cdkDropListEntered($event)"
+            >
+              <div
+                cdkDrag
+                class="card p-1 m-1 image-card"
+                *ngIf="image.action != 'delete'"
+              >
+                <span
+                  [ngClass]="[
+                    'badge bg-secondary m-1',
+                    'position-absolute top-0 start-0'
+                  ]"
+                  >{{ image.index }}</span
+                >
+
+                <!-- Loading Image -->
+                <div
+                  class="spinner-border text-secondary"
+                  role="status"
+                  *ngIf="image.src == ''"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <!-- Image -->
+                <img
+                  [src]="image.src"
+                  *ngIf="image.src != '' && image.action != 'delete'"
+                  class=""
+                />
+                <!-- Delete button -->
+                <button
+                  type="button"
+                  [ngClass]="[
+                    'btn btn-light',
+                    'border border-2 py-0 px-1 m-1 ',
+                    'rounded-circle',
+                    'position-absolute top-0 end-0'
+                  ]"
+                  (click)="removeImage(image.index)"
+                >
+                  <i class="bi bi-x-circle"></i>
+                </button>
+                <!-- Primary Badge -->
+                <span
+                  [ngClass]="[
+                    'badge rounded-pill bg-dark m-1',
+                    'position-absolute bottom-0 start-50 translate-middle-x'
+                  ]"
+                  *ngIf="image.primary"
+                >
+                  Primary
+                </span>
+                <!-- Make primary button -->
+                <span
+                  [ngClass]="[
+                    'badge rounded-pill bg-secondary m-1',
+                    'position-absolute bottom-0 start-50 translate-middle-x'
+                  ]"
+                  *ngIf="!image.primary"
+                  role="button"
+                  (click)="makePrimary(image.index)"
+                >
+                  Make Primary
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

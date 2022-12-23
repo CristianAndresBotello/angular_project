@@ -1,0 +1,75 @@
+<form>
+  <div
+    [ngClass]="[
+      'module-header',
+      'd-flex justify-content-between flex-wrap flex-md-nowrap align-items-center',
+      'pt-3 pb-2 mb-3',
+      'border-bottom'
+    ]"
+  >
+    <h1 class="h2">
+      <i class="bi bi-person-fill"></i>
+      <span class="text-capitalize">Configuration</span>
+      <button
+        type="button"
+        class="btn btn-primary ms-3"
+        [disabled]="submitDisabled"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+    </h1>
+  </div>
+  <div>
+    <ul
+      ngbNav
+      #nav="ngbNav"
+      [(activeId)]="activeTab"
+      class="nav-tabs"
+      (navChange)="validateForm = false"
+    >
+      <li ngbNavItem="general-tab">
+        <a ngbNavLink>General</a>
+        <ng-template ngbNavContent>
+          <app-general
+            [validateForm]="validateForm"
+            [parentForm]="generalForm"
+          ></app-general>
+        </ng-template>
+      </li>
+      <li ngbNavItem="design-tab">
+        <a ngbNavLink>Design Web</a>
+        <ng-template ngbNavContent>
+          <app-design-web
+            [validateForm]="validateForm"
+            [parentForm]="designWebForm"
+            [imagesSrc]="designImages"
+          ></app-design-web>
+        </ng-template>
+      </li>
+      <li ngbNavItem="payment-tab">
+        <a ngbNavLink>Payment Methods</a>
+        <ng-template ngbNavContent>
+          <app-payment-methods
+            [validateForm]="validateForm"
+            [parentForm]="paymentMethodForm"
+          ></app-payment-methods>
+        </ng-template>
+      </li>
+      <li ngbNavItem="email-tab">
+        <a ngbNavLink>Email Addresses</a>
+        <ng-template ngbNavContent>
+          <app-email-addresses
+            [validateForm]="validateForm"
+            [parentForm]="emailAddressesForm"
+            [imagesSrc]="emailImages"
+          ></app-email-addresses>
+        </ng-template>
+      </li>
+    </ul>
+    <div
+      [ngbNavOutlet]="nav"
+      class="border-start border-bottom border-end rounded-bottom"
+    ></div>
+  </div>
+</form>

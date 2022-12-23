@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"), url(../../assets/fonts/Lato/Lato-Regular.ttf) format("truetype");
+}
+
+.main-container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+
+  font-family: "Lato", Arial, Helvetica, sans-serif;
+
+  .header {
+    grid-area: header;
+  }
+
+  .main {
+    grid-area: main;
+  }
+
+  .footer {
+    grid-area: footer;
+  }
+}

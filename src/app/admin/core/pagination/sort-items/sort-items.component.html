@@ -1,0 +1,14 @@
+<div class="module-pagination-sort-item">
+    <div class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <select class="form-select"  [(ngModel)]="itemsPerPage" (change)="onChangeItemsPerPage($event)" >
+                <option *ngFor="let item of itemList" [ngValue]="item" >{{item}}</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <select class="form-select" [(ngModel)]="sort" (change)="onChangeSort($event)">
+                <option *ngFor="let item of sortList" [ngValue]="item.index">{{item.value}}</option>
+            </select>
+        </div>
+    </div>
+</div>

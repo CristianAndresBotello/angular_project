@@ -1,0 +1,77 @@
+<ng-container [ngSwitch]="field.type" [formGroup]="parentForm">
+  <!-- input text -->
+  <div *ngSwitchCase="'input'">
+    <input
+      class="form-control"
+      type="text"
+      [id]="field.id"
+      [name]="field.id"
+      [formControlName]="field.id"
+    />
+  </div>
+
+  <!-- text area -->
+  <div *ngSwitchCase="'textarea'">
+    <textarea
+      class="form-control"
+      rows="3"
+      [id]="field.id"
+      [name]="field.id"
+      [formControlName]="field.id"
+    ></textarea>
+  </div>
+
+  <!-- checkboxes -->
+  <div
+    *ngSwitchCase="'checkbox'"
+    [ngClass]="['form-control-checkbox-list', 'border rounded', 'px-1']"
+  >
+    <div
+      class="form-check"
+      *ngFor="let value of field.values; let valueIndex = index"
+      [formGroupName]="field.id"
+    >
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [id]="value.id"
+        [name]="field.id"
+        [formControlName]="value.id"
+      />
+      <label class="form-check-label" [for]="value.id">
+        {{ value.name }}
+      </label>
+    </div>
+  </div>
+
+  <!-- radio buttons -->
+  <div *ngSwitchCase="'radio'">
+    <div class="form-check" *ngFor="let value of field.values">
+      <input
+        class="form-check-input"
+        type="radio"
+        [id]="value.id"
+        [name]="field.id"
+        [formControlName]="field.id"
+        [value]="value.id"
+      />
+      <label class="form-check-label" [for]="value.id">
+        {{ value.name }}
+      </label>
+    </div>
+  </div>
+
+  <!-- Select -->
+  <div *ngSwitchCase="'select'">
+    <select
+      class="form-select"
+      [id]="field.id"
+      [name]="field.id"
+      [formControlName]="field.id"
+    >
+      <option *ngFor="let value of field.values" [value]="value.id">
+        {{ value.name }}
+      </option>
+    </select>
+  </div>
+</ng-container>

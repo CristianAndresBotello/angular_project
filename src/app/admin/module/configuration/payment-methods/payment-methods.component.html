@@ -1,0 +1,417 @@
+<div class="row p-2">
+  <!-- Paypal -->
+  <div class="col-xs-12 col-lg-6">
+    <!-- Credit Card -->
+    <div [formGroup]="paypalCredit" class="border rounded p-2 mb-2">
+      <h5>Paypal Credit Card</h5>
+      <!-- Status -->
+      <div class="form-floating mb-2">
+        <select
+          id="status"
+          name="status"
+          formControlName="status"
+          class="form-select"
+          [class.is-invalid]="validateControl(paypalCredit, 'status')"
+        >
+          <option *ngFor="let option of statusOptions" [ngValue]="option.key">
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="status" class="form-label">Status</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalCredit.controls.status"
+        ></app-alert-validation>
+      </div>
+      <!-- Title -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Title"
+          id="title"
+          name="title"
+          formControlName="title"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalCredit, 'title')"
+        />
+        <label for="title">Title</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalCredit.controls.title"
+        ></app-alert-validation>
+      </div>
+      <!-- User -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="User"
+          id="user"
+          name="user"
+          formControlName="user"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalCredit, 'user')"
+        />
+        <label for="user">User</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalCredit.controls.user"
+        ></app-alert-validation>
+      </div>
+      <!-- Password -->
+      <div class="mb-2">
+        <div class="form-floating password-group">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Password"
+            id="password"
+            name="password"
+            formControlName="password"
+            class="form-control"
+            [class.is-invalid]="validateControl(paypalCredit, 'password')"
+          />
+          <label for="password">Password</label>
+          <div
+            class="input-group-text"
+            role="button"
+            (click)="showPassword = !showPassword"
+          >
+            <i
+              class="bi"
+              [class.bi-eye-slash-fill]="showPassword"
+              [class.bi-eye-fill]="!showPassword"
+            ></i>
+          </div>
+        </div>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalCredit.controls.password"
+        ></app-alert-validation>
+      </div>
+      <!-- Client Id -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Client ID"
+          id="clientId"
+          name="clientId"
+          formControlName="clientId"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalCredit, 'clientId')"
+        />
+        <label for="clientId">Client ID</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalCredit.controls.clientId"
+        ></app-alert-validation>
+      </div>
+      <!-- Secret -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Secret"
+          id="secret"
+          name="secret"
+          formControlName="secret"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalCredit, 'secret')"
+        />
+        <label for="secret">Secret</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalCredit.controls.secret"
+        ></app-alert-validation>
+      </div>
+      <!-- Mode -->
+      <div class="form-floating mb-2">
+        <select
+          id="mode"
+          name="mode"
+          formControlName="mode"
+          class="form-select"
+          [class.is-invalid]="validateControl(paypalCredit, 'mode')"
+        >
+          <option *ngFor="let option of modeOptions" [ngValue]="option.key">
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="mode" class="form-label">Mode</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalCredit.controls.mode"
+        ></app-alert-validation>
+      </div>
+      <!-- Sort -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Sort"
+          id="sort"
+          name="sort"
+          formControlName="sort"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalCredit, 'sort')"
+        />
+        <label for="sort">Sort</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalCredit.controls.sort"
+        ></app-alert-validation>
+      </div>
+    </div>
+    <!-- Express Checkout -->
+    <div [formGroup]="paypalExpress" class="border rounded p-2 mb-2">
+      <h5>Paypal Express Checkout</h5>
+      <!-- Status -->
+      <div class="form-floating mb-2">
+        <select
+          id="status"
+          name="status"
+          formControlName="status"
+          class="form-select"
+          [class.is-invalid]="validateControl(paypalExpress, 'status')"
+        >
+          <option *ngFor="let option of statusOptions" [ngValue]="option.key">
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="status" class="form-label">Status</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalExpress.controls.status"
+        ></app-alert-validation>
+      </div>
+      <!-- Title -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Title"
+          id="title"
+          name="title"
+          formControlName="title"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalExpress, 'title')"
+        />
+        <label for="title">Title</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalExpress.controls.title"
+        ></app-alert-validation>
+      </div>
+      <!-- User -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="User"
+          id="user"
+          name="user"
+          formControlName="user"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalExpress, 'user')"
+        />
+        <label for="user">User</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalExpress.controls.user"
+        ></app-alert-validation>
+      </div>
+      <!-- Password -->
+      <div class="mb-2">
+        <div class="form-floating password-group">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Password"
+            id="password"
+            name="password"
+            formControlName="password"
+            class="form-control"
+            [class.is-invalid]="validateControl(paypalExpress, 'password')"
+          />
+          <label for="password">Password</label>
+          <div
+            class="input-group-text"
+            role="button"
+            (click)="showPassword = !showPassword"
+          >
+            <i
+              class="bi"
+              [class.bi-eye-slash-fill]="showPassword"
+              [class.bi-eye-fill]="!showPassword"
+            ></i>
+          </div>
+        </div>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalExpress.controls.password"
+        ></app-alert-validation>
+      </div>
+      <!-- Client Id -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Client ID"
+          id="clientId"
+          name="clientId"
+          formControlName="clientId"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalExpress, 'clientId')"
+        />
+        <label for="clientId">Client ID</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalExpress.controls.clientId"
+        ></app-alert-validation>
+      </div>
+      <!-- Secret -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Secret"
+          id="secret"
+          name="secret"
+          formControlName="secret"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalExpress, 'secret')"
+        />
+        <label for="secret">Secret</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalExpress.controls.secret"
+        ></app-alert-validation>
+      </div>
+      <!-- Mode -->
+      <div class="form-floating mb-2">
+        <select
+          id="mode"
+          name="mode"
+          formControlName="mode"
+          class="form-select"
+          [class.is-invalid]="validateControl(paypalExpress, 'mode')"
+        >
+          <option *ngFor="let option of modeOptions" [ngValue]="option.key">
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="mode" class="form-label">Mode</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalExpress.controls.mode"
+        ></app-alert-validation>
+      </div>
+      <!-- Sort -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Sort"
+          id="sort"
+          name="sort"
+          formControlName="sort"
+          class="form-control"
+          [class.is-invalid]="validateControl(paypalExpress, 'sort')"
+        />
+        <label for="sort">Sort</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="paypalExpress.controls.sort"
+        ></app-alert-validation>
+      </div>
+    </div>
+  </div>
+  <!-- Stripe -->
+  <div class="col-xs-12 col-lg-6">
+    <div [formGroup]="stripe" class="border rounded p-2 mb-2">
+      <h5>Stripe Credit Card</h5>
+      <!-- Status -->
+      <div class="form-floating mb-2">
+        <select
+          id="status"
+          name="status"
+          formControlName="status"
+          class="form-select"
+          [class.is-invalid]="validateControl(stripe, 'status')"
+        >
+          <option *ngFor="let option of statusOptions" [ngValue]="option.key">
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="status" class="form-label">Status</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="stripe.controls.status"
+        ></app-alert-validation>
+      </div>
+      <!-- Title -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Title"
+          id="title"
+          name="title"
+          formControlName="title"
+          class="form-control"
+          [class.is-invalid]="validateControl(stripe, 'title')"
+        />
+        <label for="title">Title</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="stripe.controls.title"
+        ></app-alert-validation>
+      </div>
+      <!-- Secret Key -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Secret Key"
+          id="secretKey"
+          name="secretKey"
+          formControlName="secretKey"
+          class="form-control"
+          [class.is-invalid]="validateControl(stripe, 'secretKey')"
+        />
+        <label for="secretKey">Secret Key</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="stripe.controls.secretKey"
+        ></app-alert-validation>
+      </div>
+      <!-- Publishable Key -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Publishable Key"
+          id="publishableKey"
+          name="publishableKey"
+          formControlName="publishableKey"
+          class="form-control"
+          [class.is-invalid]="validateControl(stripe, 'publishableKey')"
+        />
+        <label for="publishableKey">Publishable Key</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="stripe.controls.publishableKey"
+        ></app-alert-validation>
+      </div>
+      <!-- Wallet Pay -->
+      <div class="form-floating mb-2">
+        <select
+          id="walletPay"
+          name="walletPay"
+          formControlName="walletPay"
+          class="form-select"
+          [class.is-invalid]="validateControl(stripe, 'walletPay')"
+        >
+          <option
+            *ngFor="let option of walletPayOptions"
+            [ngValue]="option.key"
+          >
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="walletPay" class="form-label">Wallet Pay</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="stripe.controls.walletPay"
+        ></app-alert-validation>
+      </div>
+    </div>
+  </div>
+</div>

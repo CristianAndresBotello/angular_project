@@ -1,0 +1,18 @@
+<div *ngIf="numberOfPages > 1" class="module-pagination">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li *ngIf="previousLinkStatus" class="page-item">
+                <a class="page-link" [routerLink]="[previousLink.baseUrl]"
+                    [queryParams]="previousLink.params">Previous</a>
+            </li>
+            <li *ngFor="let item of pageList" class="page-item" [ngClass]="{ 'active': item.page === page }">
+                <a *ngIf="item.type=='page'" class="page-link" [routerLink]="[item.link.baseUrl]"
+                    [queryParams]="item.link.params">{{item.page}}</a>
+                <a *ngIf="item.type=='dots'" class="page-link">...</a>
+            </li>
+            <li *ngIf="nextLinkStatus" class="page-item">
+                <a [routerLink]="[nextLink.baseUrl]" [queryParams]="nextLink.params" class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>

@@ -1,0 +1,49 @@
+<form
+  class="module-search row row-cols-lg-auto g-3 align-items-center"
+  *ngIf="searchForm"
+  [formGroup]="searchForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="col-12">
+    <div class="input-group search-term-group">
+      <input
+        type="text"
+        [ngClass]="
+          searchTerm.value == ''
+            ? 'form-control'
+            : 'form-control border-end-0 border'
+        "
+        id="dataListSearch"
+        placeholder="Search"
+        formControlName="searchTerm"
+        value=""
+      />
+      <span class="input-group-append" *ngIf="searchTerm.value != ''">
+        <button
+          class="btn btn-white border-start-0 border"
+          type="button"
+          (click)="clearSearch()"
+        >
+          <i class="bi bi-x"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+  <div class="col-12">
+    <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+    <select
+      class="form-select"
+      id="inlineFormSelectPref"
+      formControlName="searchOption"
+    >
+      <option *ngFor="let option of options" [ngValue]="option.key">
+        {{ option.value }}
+      </option>
+    </select>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-sm btn-primary">
+      <i class="bi bi-search"></i> Submit
+    </button>
+  </div>
+</form>

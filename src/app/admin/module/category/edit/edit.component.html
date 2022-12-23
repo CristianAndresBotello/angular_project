@@ -1,0 +1,118 @@
+<form class="row g-2" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <div
+    class="module-header d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+  >
+    <h1 class="h2">
+      <i class="bi bi-person-fill"></i>
+      <span class="text-capitalize">{{ currentForm }} Product Category</span>
+      <button
+        type="submit"
+        class="btn btn-primary ms-3"
+        [disabled]="submitDisabled"
+      >
+        Submit
+      </button>
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <div class="form-floating mb-2">
+        <select
+          formControlName="status"
+          name="status"
+          id="status"
+          [ngClass]="[
+            'form-select',
+            validateForm && status.errors ? 'is-invalid' : ''
+          ]"
+        >
+          <option *ngFor="let option of statusOptions" [ngValue]="option.key">
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="status" class="form-label">Status</label>
+        <!-- Validation -->
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="status"
+        ></app-alert-validation>
+      </div>
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          formControlName="name"
+          name="name"
+          id="name"
+          [ngClass]="[
+            'form-control',
+            validateForm && name.errors ? 'is-invalid' : ''
+          ]"
+          placeholder="Name"
+        />
+        <label for="name" class="form-label">Name</label>
+        <!-- Validation -->
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="name"
+        ></app-alert-validation>
+      </div>
+      <div class="form-floating mb-2">
+        <input
+          type="number"
+          formControlName="sort"
+          name="sort"
+          id="sort"
+          [ngClass]="[
+            'form-control',
+            validateForm && sort.errors ? 'is-invalid' : ''
+          ]"
+          placeholder="Name"
+        />
+        <label for="sort" class="form-label">Sort</label>
+        <!-- Validation -->
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="sort"
+        ></app-alert-validation>
+      </div>
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          formControlName="title"
+          name="title"
+          id="title"
+          [ngClass]="[
+            'form-control',
+            validateForm && title.errors ? 'is-invalid' : ''
+          ]"
+          placeholder="Name"
+        />
+        <label for="title" class="form-label">Title</label>
+        <!-- Validation -->
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="title"
+        ></app-alert-validation>
+      </div>
+      <div class="form-floating mb-2">
+        <textarea
+          formControlName="description"
+          name="description"
+          id="description"
+          [ngClass]="[
+            'category-description',
+            'form-control',
+            validateForm && description.errors ? 'is-invalid' : ''
+          ]"
+          placeholder="Description"
+        ></textarea>
+        <label for="description" class="form-label">Description</label>
+        <!-- Validation -->
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="description"
+        ></app-alert-validation>
+      </div>
+    </div>
+  </div>
+</form>

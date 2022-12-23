@@ -1,0 +1,36 @@
+.content-image{
+    display: block;
+    position: relative;
+
+    img{
+        width: 100%;
+        border-radius: 3px 3px 0px 0px;
+    }
+    .btn-add-to-cart{
+        position: absolute;
+        right: .4rem;
+        bottom: 1rem;
+    }
+}
+
+.content-information{
+    padding: .4rem .5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    .rating{
+        width: 60%;
+        grid-column: span 1;
+    } 
+    .view-like{
+        width: 100%;
+        grid-column: span 1;
+        text-align: end;
+        display: flex;
+        justify-content: end;
+    } 
+    .product-information{
+        width: 100%;
+        grid-column: span 2;
+    }
+}

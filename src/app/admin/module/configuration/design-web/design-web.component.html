@@ -1,0 +1,287 @@
+<div class="row p-2">
+  <div class="col-xs-12 col-lg-6">
+    <!-- Head -->
+    <div [formGroup]="head" class="border rounded p-2 mb-2">
+      <h5>Head</h5>
+      <!-- Favicon -->
+      <label for="favicon" class="form-label">Favicon</label>
+      <div class="mb-2">
+        <div class="mb-2">
+          <input
+            type="file"
+            accept="image/jpeg,image/png"
+            id="favicon"
+            name="favicon"
+            class="form-control"
+            [class.is-invalid]="validateForm && head.controls.favicon.errors"
+            (change)="onFileChange($event, head, 'favicon')"
+          />
+        </div>
+        <div
+          *ngIf="imagesSrc['favicon']"
+          class="position-relative image-container"
+        >
+          <img class="border rounded" [src]="imagesSrc['favicon']" alt="" />
+          <button
+            type="button"
+            [ngClass]="[
+              'btn btn-light',
+              'border border-4 py-0 px-1 m-1 rounded-circle',
+              'position-absolute top-0 end-0'
+            ]"
+            (click)="removeImage(head, 'favicon')"
+          >
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+      <!-- Title -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Default title"
+          id="title"
+          name="title"
+          formControlName="title"
+          [ngClass]="[
+            'form-control',
+            validateForm && head.controls.title.errors ? 'is-invalid' : ''
+          ]"
+        />
+        <label for="title">Default title</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="head.controls.title"
+        ></app-alert-validation>
+      </div>
+      <!-- Prefix -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Title prefix"
+          id="titlePrefix"
+          name="titlePrefix"
+          formControlName="titlePrefix"
+          [ngClass]="[
+            'form-control',
+            validateForm && head.controls.titlePrefix.errors ? 'is-invalid' : ''
+          ]"
+        />
+        <label for="titlePrefix">Title prefix</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="head.controls.titlePrefix"
+        ></app-alert-validation>
+      </div>
+      <!-- Sufix -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Title sufix"
+          id="titleSufix"
+          name="titleSufix"
+          formControlName="titleSufix"
+          [ngClass]="[
+            'form-control',
+            validateForm && head.controls.titleSufix.errors ? 'is-invalid' : ''
+          ]"
+        />
+        <label for="titleSufix">Title sufix</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="head.controls.titleSufix"
+        ></app-alert-validation>
+      </div>
+      <!-- Description -->
+      <div class="form-floating mb-2">
+        <textarea
+          placeholder="Default description"
+          id="description"
+          name="description"
+          formControlName="description"
+          [ngClass]="[
+            'form-control',
+            validateForm && head.controls.description.errors ? 'is-invalid' : ''
+          ]"
+        ></textarea>
+        <label for="description">Default description</label>
+      </div>
+      <!-- Keywords -->
+      <div class="form-floating mb-2">
+        <textarea
+          placeholder="Default keywords"
+          id="keywords"
+          name="keywords"
+          formControlName="keywords"
+          [ngClass]="[
+            'form-control',
+            validateForm && head.controls.keywords.errors ? 'is-invalid' : ''
+          ]"
+        ></textarea>
+        <label for="keywords">Default keywords</label>
+      </div>
+      <!-- Robots -->
+      <div class="form-floating mb-2">
+        <select
+          id="robots"
+          name="robots"
+          formControlName="robots"
+          [ngClass]="[
+            'form-select',
+            validateForm && head.controls.robots.errors ? 'is-invalid' : ''
+          ]"
+        >
+          <option *ngFor="let option of robotsOptions" [ngValue]="option.key">
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="robots" class="form-label">Default robots</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="head.controls.robots"
+        ></app-alert-validation>
+      </div>
+      <!-- Scripts -->
+      <div class="form-floating mb-2">
+        <textarea
+          placeholder="Default scripts"
+          id="scripts"
+          name="scripts"
+          formControlName="scripts"
+          [ngClass]="[
+            'form-control',
+            validateForm && head.controls.scripts.errors ? 'is-invalid' : ''
+          ]"
+        ></textarea>
+        <label for="scripts">Default scripts</label>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div [formGroup]="header" class="border rounded p-2 mb-2">
+      <h5>Header</h5>
+      <!-- Logo -->
+      <label for="logo" class="form-label">Logo Image</label>
+      <div class="mb-2">
+        <div class="mb-2">
+          <input
+            type="file"
+            accept="image/jpeg,image/png"
+            id="logo"
+            name="logo"
+            class="form-control"
+            [class.is-invalid]="validateForm && header.controls.logo.errors"
+            (change)="onFileChange($event, header, 'logo')"
+          />
+        </div>
+        <div
+          *ngIf="imagesSrc['logo']"
+          class="position-relative image-container"
+        >
+          <img class="border rounded" [src]="imagesSrc['logo']" alt="" />
+          <button
+            type="button"
+            [ngClass]="[
+              'btn btn-light',
+              'border border-4 py-0 px-1 m-1 rounded-circle',
+              'position-absolute top-0 end-0'
+            ]"
+            (click)="removeImage(header, 'logo')"
+          >
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+      <!-- Logo Alt -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Logo Image Alt"
+          id="logoAlt"
+          name="logoAlt"
+          formControlName="logoAlt"
+          [ngClass]="[
+            'form-control',
+            validateForm && header.controls.logoAlt.errors ? 'is-invalid' : ''
+          ]"
+        />
+        <label for="logoAlt">Logo Image Alt</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="header.controls.logoAlt"
+        ></app-alert-validation>
+      </div>
+      <!-- Welcome Text -->
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          placeholder="Welcome Text"
+          id="welcomeText"
+          name="welcomeText"
+          formControlName="welcomeText"
+          [ngClass]="[
+            'form-control',
+            validateForm && header.controls.welcomeText.errors
+              ? 'is-invalid'
+              : ''
+          ]"
+        />
+        <label for="welcomeText">Welcome Text</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="header.controls.welcomeText"
+        ></app-alert-validation>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div [formGroup]="footer" class="border rounded p-2 mb-2">
+      <h5>Footer</h5>
+      <!-- Copyright -->
+      <div class="form-floating mb-2">
+        <textarea
+          placeholder="Copyright"
+          id="copyright"
+          name="copyright"
+          formControlName="copyright"
+          [ngClass]="[
+            'form-control',
+            validateForm && footer.controls.copyright.errors ? 'is-invalid' : ''
+          ]"
+        ></textarea>
+        <label for="copyright">Copyright</label>
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="footer.controls.copyright"
+        ></app-alert-validation>
+      </div>
+      <!-- Miscellaneous HTML -->
+      <label for="html" class="form-label">Miscellaneous HTML</label>
+      <angular-editor
+        id="html"
+        formControlName="html"
+        [config]="editorConfig"
+        [ngClass]="[
+          'form-control',
+          validateForm && footer.controls.html.errors ? 'is-invalid' : ''
+        ]"
+      ></angular-editor>
+      <app-alert-validation
+        *ngIf="validateForm"
+        [data]="footer.controls.html"
+      ></app-alert-validation>
+    </div>
+  </div>
+</div>
+
+<!-- <ngb-accordion>
+  <ngb-panel id="static-1" title="Head">
+    <ng-template ngbPanelContent> </ng-template>
+  </ngb-panel>
+  <ngb-panel id="static-2" title="Header">
+    <ng-template ngbPanelContent> </ng-template>
+  </ngb-panel>
+  <ngb-panel id="static-3" title="Footer">
+    <ng-template ngbPanelContent> </ng-template>
+  </ngb-panel>
+</ngb-accordion> -->

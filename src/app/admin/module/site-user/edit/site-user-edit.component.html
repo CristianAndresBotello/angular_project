@@ -1,0 +1,558 @@
+<form class="row g-2" [formGroup]="siteUserForm" (ngSubmit)="onSubmit()">
+  <div
+    class="module-header d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+  >
+    <h1 class="h2">
+      <i class="bi bi-person-fill"></i>
+      <span class="text-capitalize">{{ currentForm }} Site User</span>
+      <button
+        type="submit"
+        class="btn btn-primary ms-3"
+        [disabled]="submitDisabled"
+      >
+        Submit
+      </button>
+    </h1>
+  </div>
+
+  <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>General</a>
+      <ng-template ngbNavContent>
+        <div class="col-md-6">
+          <div class="form-floating mb-2">
+            <select
+              formControlName="status"
+              name="status"
+              id="status"
+              [ngClass]="[
+                'form-select',
+                validateForm && status.errors ? 'is-invalid' : ''
+              ]"
+            >
+              <option
+                *ngFor="let option of statusOptions"
+                [ngValue]="option.key"
+              >
+                {{ option.value }}
+              </option>
+            </select>
+            <label for="status" class="form-label">Status</label>
+            <!-- Validation -->
+            <app-alert-validation
+              *ngIf="validateForm"
+              [data]="status"
+            ></app-alert-validation>
+          </div>
+          <div class="form-floating mb-2">
+            <input
+              type="text"
+              formControlName="user"
+              name="user"
+              id="user"
+              [ngClass]="[
+                'form-control',
+                validateForm && user.errors ? 'is-invalid' : ''
+              ]"
+              placeholder="User"
+            />
+            <label for="user" class="form-label">User</label>
+            <!-- Validation -->
+            <app-alert-validation
+              *ngIf="validateForm"
+              [data]="user"
+            ></app-alert-validation>
+          </div>
+          <div class="mb-2">
+            <div class="form-floating password-group">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                name="password"
+                id="password"
+                [ngClass]="[
+                  'form-control',
+                  validateForm && password.errors ? 'is-invalid' : ''
+                ]"
+                placeholder="Password"
+              />
+              <label for="password" class="form-label">Password</label>
+              <span
+                class="input-group-text"
+                (click)="showPassword = !showPassword"
+                role="button"
+              >
+                <i
+                  [ngClass]="
+                    showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'
+                  "
+                ></i>
+              </span>
+            </div>
+            <!-- Validation -->
+            <app-alert-validation
+              *ngIf="validateForm"
+              [data]="password"
+            ></app-alert-validation>
+          </div>
+          <div class="form-floating mb-2">
+            <input
+              type="text"
+              formControlName="name"
+              name="name"
+              id="name"
+              [ngClass]="[
+                'form-control',
+                validateForm && name.errors ? 'is-invalid' : ''
+              ]"
+              placeholder="Name"
+            />
+            <label for="name" class="form-label">Name</label>
+            <!-- Validation -->
+            <app-alert-validation
+              *ngIf="validateForm"
+              [data]="name"
+            ></app-alert-validation>
+          </div>
+          <div class="form-floating mb-2">
+            <input
+              type="text"
+              formControlName="email"
+              name="email"
+              id="email"
+              [ngClass]="[
+                'form-control',
+                validateForm && email.errors ? 'is-invalid' : ''
+              ]"
+              placeholder="Email"
+            />
+            <label for="email" class="form-label">Email</label>
+            <!-- Validation -->
+            <app-alert-validation
+              *ngIf="validateForm"
+              [data]="email"
+            ></app-alert-validation>
+          </div>
+          <div class="mb-2">
+            <label for="" class="form-label">Gender</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input
+                  [ngClass]="[
+                    'form-check-input',
+                    validateForm && gender.errors ? 'is-invalid' : ''
+                  ]"
+                  type="radio"
+                  formControlName="gender"
+                  name="gender"
+                  id="genderMale"
+                  value="m"
+                />
+                <label class="form-check-label" for="genderMale">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  [ngClass]="[
+                    'form-check-input',
+                    validateForm && gender.errors ? 'is-invalid' : ''
+                  ]"
+                  type="radio"
+                  formControlName="gender"
+                  name="gender"
+                  id="genderFemale"
+                  value="f"
+                />
+                <label class="form-check-label" for="genderFemale"
+                  >Female</label
+                >
+              </div>
+
+              <!-- Validation -->
+              <app-alert-validation
+                *ngIf="validateForm"
+                [data]="gender"
+              ></app-alert-validation>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="photo" class="form-label">Photo</label>
+            <input
+              class="form-control"
+              type="file"
+              name="photo"
+              id="photo"
+              (change)="onFileChange($event)"
+              accept="image/jpeg,image/png"
+            />
+          </div>
+          <div class="mb-3">
+            <div *ngIf="userPhotoSrc" class="position-relative photo-container">
+              <img
+                class="border rounded img-fluid position-absolute top-0 end-0"
+                [src]="userPhotoSrc"
+                alt=""
+              />
+              <button
+                type="button"
+                class="btn btn-light border border-4 py-0 px-1 m-1 rounded-circle position-absolute top-0 end-0"
+                (click)="removeUserPhoto()"
+              >
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Addresess</a>
+      <ng-template ngbNavContent>
+        <div class="mb-3">
+          <button
+            [ngClass]="
+              showAddressForm
+                ? 'btn btn-sm btn-secondary'
+                : 'btn btn-sm btn-success'
+            "
+            type="button"
+            (click)="viewAddressForm()"
+          >
+            {{ showAddressForm ? "Hide Address" : "Add Address" }}
+          </button>
+        </div>
+        <!-- ADDRESSES BEGIN -->
+        <div
+          class="row"
+          formGroupName="address"
+          [ngClass]="showAddressForm ? '' : 'd-none'"
+        >
+          <div class="col-md-6 p-2 border rounded">
+            <div class="d-flex justify-content-end d-none">
+              <div class="form-check form-check-inline mb-2">
+                <input
+                  formControlName="status"
+                  name="status"
+                  id="statusActive"
+                  type="radio"
+                  class="form-check-input"
+                  value="1"
+                  checked
+                />
+                <label class="form-check-label" for="statusActive"
+                  >Active</label
+                >
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  formControlName="status"
+                  name="status"
+                  id="statusInactive"
+                  type="radio"
+                  class="form-check-input"
+                  value="2"
+                />
+                <label class="form-check-label" for="statusInactive"
+                  >Inactive</label
+                >
+              </div>
+            </div>
+
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                formControlName="title"
+                name="title"
+                id="title"
+                [ngClass]="[
+                  'form-control',
+                  validateForm && addressTitle?.errors ? 'is-invalid' : ''
+                ]"
+                placeholder="Title"
+              />
+              <label for="title" class="form-label">Title</label>
+              <!-- Validation -->
+              <app-alert-validation
+                *ngIf="validateForm"
+                [data]="addressTitle"
+              ></app-alert-validation>
+            </div>
+
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                formControlName="name"
+                name="name"
+                id="name"
+                [ngClass]="[
+                  'form-control',
+                  validateForm && addressName?.errors ? 'is-invalid' : ''
+                ]"
+                placeholder="Name"
+              />
+              <label for="name" class="form-label">Name</label>
+              <!-- Validation -->
+              <app-alert-validation
+                *ngIf="validateForm"
+                [data]="addressName"
+              ></app-alert-validation>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-floating mb-2">
+                  <input
+                    type="text"
+                    formControlName="telephone"
+                    name="telephone"
+                    id="telephone"
+                    [ngClass]="[
+                      'form-control',
+                      validateForm && addressTelephone?.errors
+                        ? 'is-invalid'
+                        : ''
+                    ]"
+                    placeholder="Telephone"
+                  />
+                  <label for="telephone" class="form-label">Telephone</label>
+                  <!-- Validation -->
+                  <app-alert-validation
+                    *ngIf="validateForm"
+                    [data]="addressTelephone"
+                  ></app-alert-validation>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating mb-2">
+                  <input
+                    type="text"
+                    formControlName="fax"
+                    name="fax"
+                    id="fax"
+                    [ngClass]="['form-control']"
+                    placeholder="Fax"
+                  />
+                  <label for="fax" class="form-label">Fax</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                formControlName="street"
+                name="street"
+                id="street"
+                [ngClass]="[
+                  'form-control',
+                  validateForm && addressStreet?.errors ? 'is-invalid' : ''
+                ]"
+                placeholder="Street"
+              />
+              <label for="street" class="form-label">Street</label>
+              <!-- Validation -->
+              <app-alert-validation
+                *ngIf="validateForm"
+                [data]="addressStreet"
+              ></app-alert-validation>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-floating mb-2">
+                  <select
+                    formControlName="country"
+                    id="country"
+                    name="country"
+                    [ngClass]="[
+                      'form-select',
+                      validateForm && addressCountry?.errors ? 'is-invalid' : ''
+                    ]"
+                  >
+                    <option
+                      *ngFor="let country of countriesList"
+                      [ngValue]="country.code"
+                    >
+                      {{ country.name }}
+                    </option>
+                  </select>
+                  <label for="country" class="form-label">Country</label>
+                  <!-- Validation -->
+                  <app-alert-validation
+                    *ngIf="validateForm"
+                    [data]="addressCountry"
+                  ></app-alert-validation>
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- State Select -->
+                <div
+                  class="form-floating mb-2"
+                  *ngIf="addressCountry?.value == 'US'"
+                >
+                  <select
+                    formControlName="state"
+                    id="stateList"
+                    name="stateList"
+                    [ngClass]="[
+                      'form-select',
+                      validateForm && addressState?.errors ? 'is-invalid' : ''
+                    ]"
+                  >
+                    <option
+                      *ngFor="let state of statesList.US"
+                      [ngValue]="state.code"
+                    >
+                      {{ state.name }}
+                    </option>
+                  </select>
+                  <label for="stateList" class="form-label">State</label>
+                </div>
+                <!-- State Input -->
+                <div
+                  class="form-floating mb-2"
+                  *ngIf="addressCountry?.value != 'US'"
+                >
+                  <input
+                    type="text"
+                    formControlName="state"
+                    name="state"
+                    id="state"
+                    [ngClass]="[
+                      'form-control',
+                      validateForm && addressState?.errors ? 'is-invalid' : ''
+                    ]"
+                    placeholder="State"
+                  />
+                  <label for="state" class="form-label">State</label>
+                  <!-- Validation -->
+                  <app-alert-validation
+                    *ngIf="validateForm"
+                    [data]="addressState"
+                  ></app-alert-validation>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-floating mb-2">
+                  <input
+                    type="text"
+                    formControlName="city"
+                    name="city"
+                    id="city"
+                    [ngClass]="[
+                      'form-control',
+                      validateForm && addressCity?.errors ? 'is-invalid' : ''
+                    ]"
+                    placeholder="City"
+                  />
+                  <label for="city" class="form-label">City</label>
+                  <!-- Validation -->
+                  <app-alert-validation
+                    *ngIf="validateForm"
+                    [data]="addressCity"
+                  ></app-alert-validation>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating mb-2">
+                  <input
+                    type="text"
+                    formControlName="zipcode"
+                    name="zipcode"
+                    id="zipcode"
+                    [ngClass]="[
+                      'form-control',
+                      validateForm && addressZipcode?.errors ? 'is-invalid' : ''
+                    ]"
+                    placeholder="Zipcode"
+                  />
+                  <label for="zipcode" class="form-label">Zipcode</label>
+                  <!-- Validation -->
+                  <app-alert-validation
+                    *ngIf="validateForm"
+                    [data]="addressZipcode"
+                  ></app-alert-validation>
+                </div>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="checkbox"
+                formControlName="default"
+                class="form-check-input"
+                id="defaultAddress"
+              />
+              <label class="form-check-label" for="defaultAddress"
+                >This is my default address</label
+              >
+            </div>
+          </div>
+        </div>
+        <!-- ADDRESSES END -->
+        <!-- ADDRESSES LIST -->
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <div class="row gy-2">
+              <div
+                class="col-6"
+                *ngFor="let address of userAddressesView; index as i"
+              >
+                <div class="card h-100" *ngIf="address.action != 'delete'">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ address.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      {{ address.title }}
+                    </h6>
+                    <div class="card-text">
+                      <div>{{ address.street }}</div>
+                      <div>
+                        {{ address.city }}, {{ address.state }}
+                        {{ address.zipcode }}
+                      </div>
+                      <div>{{ address.country }}</div>
+                      <div>Phone: {{ address.telephone }}</div>
+                    </div>
+                    <span
+                      *ngIf="address.default"
+                      [ngClass]="[
+                        'text-success',
+                        'fs-5',
+                        'position-absolute',
+                        'top-0',
+                        'end-0'
+                      ]"
+                      title="Default Address"
+                    >
+                      <i class="bi bi-bookmark-check-fill"></i>
+                    </span>
+                  </div>
+                  <div class="card-footer">
+                    <a
+                      *ngIf="!address.default"
+                      class="card-link text-primary"
+                      (click)="setDefaultAddress(address)"
+                      role="button"
+                      >Default</a
+                    >
+                    <!-- <a href="#" class="card-link">Edit</a> -->
+                    <a
+                      class="card-link text-danger"
+                      (click)="removeAddress(address)"
+                      role="button"
+                      ><i class="bi bi-trash"></i> Remove</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ADDRESSES LIST END -->
+      </ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</form>

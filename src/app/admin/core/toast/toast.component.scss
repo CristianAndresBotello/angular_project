@@ -1,0 +1,9 @@
+:host {
+  .toast:not(.show) {
+    display: block;
+  }
+
+  .toasts-container {
+    z-index: 1100;
+  }
+}

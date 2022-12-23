@@ -1,0 +1,285 @@
+<form class="row g-2" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <div
+    class="module-header d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+  >
+    <h1 class="h2">
+      <i class="bi bi-person-fill"></i>
+      <span class="text-capitalize">{{ currentForm }} Product Category</span>
+      <button
+        type="submit"
+        class="btn btn-primary ms-3"
+        [disabled]="submitDisabled"
+      >
+        Submit
+      </button>
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <div class="form-floating mb-2">
+        <select
+          formControlName="status"
+          name="status"
+          id="status"
+          [ngClass]="[
+            'form-select',
+            validateForm && status.errors ? 'is-invalid' : ''
+          ]"
+        >
+          <option *ngFor="let option of statusOptions" [ngValue]="option.key">
+            {{ option.value }}
+          </option>
+        </select>
+        <label for="status" class="form-label">Status</label>
+        <!-- Validation -->
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="status"
+        ></app-alert-validation>
+      </div>
+      <div class="form-floating mb-2">
+        <input
+          type="text"
+          formControlName="name"
+          name="name"
+          id="name"
+          [ngClass]="[
+            'form-control',
+            validateForm && name.errors ? 'is-invalid' : ''
+          ]"
+          placeholder="Name"
+        />
+        <label for="name" class="form-label">Name</label>
+        <!-- Validation -->
+        <app-alert-validation
+          *ngIf="validateForm"
+          [data]="name"
+        ></app-alert-validation>
+      </div>
+    </div>
+  </div>
+  <!-- OPTIONS FORM -->
+  <div class="row"></div>
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <div class="mt-3 mb-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-success"
+          (click)="addOption()"
+        >
+          <i class="bi bi-plus-circle"></i><span class="ms-1">Add Option</span>
+        </button>
+      </div>
+      <!-- START FORM: options -->
+      <div [formArrayName]="'options'">
+        <div
+          class="mb-2 mt-3 border-2 border-bottom"
+          *ngFor="let option of options.controls; let i = index"
+        >
+          <div [formGroupName]="i" class="mb-2">
+            <!-- option -->
+            <div class="row mb-2 align-items-center">
+              <div class="col-1 p-0 d-flex justify-content-center">
+                <button
+                  class="btn btn-sm btn-outline-danger d-flex"
+                  type="button"
+                  (click)="removeOption(i)"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+              <div class="col-6">
+                <input
+                  formControlName="name"
+                  name="name-{{ i }}"
+                  id="name-{{ i }}"
+                  type="text"
+                  placeholder="Option Name"
+                  [ngClass]="[
+                    'option-name',
+                    'form-control',
+                    validateForm && getOption(i, 'name').errors
+                      ? 'is-invalid'
+                      : ''
+                  ]"
+                />
+                <!-- Validation -->
+                <app-alert-validation
+                  *ngIf="validateForm"
+                  [data]="getOption(i, 'name')"
+                ></app-alert-validation>
+              </div>
+              <div class="col-3">
+                <select
+                  formControlName="status"
+                  name="status-{{ i }}"
+                  id="status-{{ i }}"
+                  [ngClass]="[
+                    'option-status',
+                    'form-select',
+                    validateForm && getOption(i, 'status').errors
+                      ? 'is-invalid'
+                      : ''
+                  ]"
+                >
+                  <option
+                    *ngFor="let option of statusOptions"
+                    [ngValue]="option.key"
+                  >
+                    {{ option.value }}
+                  </option>
+                </select>
+                <!-- Validation -->
+                <app-alert-validation
+                  *ngIf="validateForm"
+                  [data]="getOption(i, 'status')"
+                ></app-alert-validation>
+              </div>
+              <div class="col-2 p-0 d-flex justify-content-center">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary text-nowrap"
+                  (click)="addField(i)"
+                >
+                  <i class="bi bi-plus-circle"></i
+                  ><span class="ms-1">Field</span>
+                </button>
+              </div>
+            </div>
+            <div class="row mb-2 align-items-center">
+              <div class="col-1"></div>
+              <div class="col-9">
+                <textarea
+                  formControlName="description"
+                  name="description-{{ i }}"
+                  id="description-{{ i }}"
+                  class="form-control"
+                  placeholder="Description"
+                ></textarea>
+              </div>
+              <div class="col-2 p-0">
+                <div class="form-check">
+                  <input
+                    formControlName="required"
+                    name="required-{{ i }}"
+                    id="required-{{ i }}"
+                    type="checkbox"
+                    class="form-check-input"
+                  />
+                  <label class="form-check-label" for="required-{{ i }}">
+                    Required
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- Fields -->
+            <div [formArrayName]="'fields'">
+              <div
+                class="mb-2"
+                *ngFor="let field of getFields(i).controls; let j = index"
+              >
+                <div [formGroupName]="j" class="row">
+                  <div class="col-1"></div>
+                  <div class="col-9 d-flex mb-2">
+                    <div class="">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger ms-1 text-nowrap"
+                        (click)="removeField(i, j)"
+                      >
+                        <i class="bi bi-dash-circle"></i>
+                        <span class="ms-1">Field</span>
+                      </button>
+                    </div>
+                    <div class="mx-1 w-100">
+                      <select
+                        formControlName="type"
+                        name="type-{{ j }}"
+                        id="type-{{ j }}"
+                        [ngClass]="[
+                          'field-type w-100',
+                          'form-select form-select-sm',
+                          validateForm && getField(i, j, 'type').errors
+                            ? 'is-invalid'
+                            : ''
+                        ]"
+                        (change)="handleFieldChange(i, j)"
+                      >
+                        <option
+                          *ngFor="let o of inputFieldOptions"
+                          [ngValue]="o.key"
+                        >
+                          {{ o.value }}
+                        </option>
+                      </select>
+                      <!-- Validation -->
+                      <app-alert-validation
+                        *ngIf="validateForm"
+                        [data]="getField(i, j, 'type')"
+                      ></app-alert-validation>
+                      <!-- VALUES -->
+                      <div class="mt-2">
+                        <div
+                          [formArrayName]="'values'"
+                          *ngFor="
+                            let value of getValues(i, j).controls;
+                            let k = index
+                          "
+                        >
+                          <div
+                            [formGroupName]="k"
+                            class="d-flex align-items-center"
+                          >
+                            <span
+                              role="button"
+                              class="me-2 mb-1 text-danger"
+                              (click)="removeValue(i, j, k)"
+                            >
+                              <i class="bi bi-dash-circle"></i>
+                            </span>
+                            <input
+                              formControlName="value"
+                              name="value-{{ k }}"
+                              id="value-{{ k }}"
+                              [ngClass]="[
+                                'form-control form-control-sm mb-1',
+                                validateForm &&
+                                getValue(i, j, k, 'value').errors
+                                  ? 'is-invalid'
+                                  : ''
+                              ]"
+                              type="text"
+                              placeholder="Value"
+                            />
+                          </div>
+                          <!-- Validation -->
+                          <app-alert-validation
+                            *ngIf="validateForm"
+                            [data]="getValue(i, j, k, 'value')"
+                          ></app-alert-validation>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary text-nowrap"
+                        (click)="handleFieldChange(i, j)"
+                      >
+                        <i class="bi bi-plus-circle"></i>
+                        <span class="ms-1">Value</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END FORM: options -->
+    </div>
+  </div>
+</form>

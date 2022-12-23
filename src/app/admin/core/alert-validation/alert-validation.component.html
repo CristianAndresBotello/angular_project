@@ -1,0 +1,13 @@
+<div *ngIf="control?.invalid && control?.errors" class="invalid-feedback">
+  <span *ngIf="control.errors.required">Please complete the information</span>
+  <span *ngIf="control.errors.minlength">
+    Must be at least {{ control.errors.minlength.requiredLength }} characters
+    long.
+  </span>
+  <span *ngIf="control.errors.email">
+    Please enter a valid email address. For example ( johndoe@mail.com )
+  </span>
+  <span *ngIf="control.errors.pattern">
+    These characters are not allowed: {{ getInvalidCharacters() }}
+  </span>
+</div>
